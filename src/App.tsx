@@ -224,7 +224,7 @@ export default function App() {
                 <div className="text-sm text-nagruen-accent/60 font-light leading-relaxed max-w-xs">
                   NaGrün AT<br />
                   Wien, Österreich<br />
-                  <a href="mailto:info@na-gruen.at" className="hover:text-nagruen-accent transition-all duration-300 hover:pl-1">iwane.narmania@na-gruen.at</a><br />
+                  <a href="mailto:info@na-gruen.at" className="hover:text-nagruen-accent transition-all duration-300 hover:pl-1">info@na-gruen.at</a><br />
                   <a href="tel:+436763043815" className="hover:text-nagruen-accent transition-all duration-300 hover:pl-1">+43 (0) 676 3043815</a>
                 </div>
               </div>
