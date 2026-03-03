@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datenschutz - NaGrün</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'nagruen-primary': '#4D5A32',
+                        'nagruen-accent': '#B3C393',
+                        'nagruen-cream': '#F5F2ED',
+                        'nagruen-dark': '#3A4426',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                        'display': ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to bottom, #B3C393, #F5F2ED);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #4D5A32, #3A4426);
+            color: #B3C393;
+            min-height: 100vh;
+        }
+
+        @keyframes dropIn {
+            from {
+                transform: translate(-50%, -100px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+
+        .nav-drop-in {
+            animation: dropIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased">
+    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-2xl nav-drop-in">
+        <div class="glass-card rounded-full px-6 py-3 flex items-center justify-between shadow-2xl">
+            <a href="/" class="flex items-center gap-2 group cursor-pointer">
+                <span class="font-display font-bold text-2xl tracking-tight text-nagruen-accent">NaGrün</span>
+            </a>
+            <a href="/#footer"
+                onclick="if(document.referrer.includes(window.location.host)){history.back(); return false;}"
+                class="text-xs font-medium uppercase tracking-widest text-nagruen-accent/70 hover:text-nagruen-accent transition-colors">Zurück</a>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-20 px-6">
+        <div class="max-w-3xl mx-auto">
+            <header class="mb-16 text-center">
+                <h1 class="text-4xl md:text-6xl font-black tracking-tight font-display text-gradient mb-4">Datenschutz
+                </h1>
+                <p class="text-lg text-nagruen-accent/60 font-light italic">Informationen über die Verarbeitung Ihrer
+                    personenbezogenen Daten</p>
+            </header>
+
+            <div class="space-y-8">
+                <section class="glass-card rounded-3xl p-8 shadow-xl">
+                    <h2 class="text-xl font-display font-bold text-nagruen-accent mb-6 uppercase tracking-wider">
+                        Verantwortliche Stelle</h2>
+                    <div class="text-nagruen-accent/80 font-light leading-relaxed">
+                        <p>Verantwortlich für die Datenverarbeitung auf dieser Website ist:</p>
+                        <p class="mt-4">
+                            Iwane Narmania - NaGrün Unternehmen vor Gründung<br>
+                            Eichenstraße 17/3<br>
+                            1120 Wien, Österreich<br>
+                            E-Mail: <a href="mailto:office@na-gruen.at"
+                                class="hover:text-nagruen-accent transition-colors underline decoration-nagruen-accent/30">office@na-gruen.at</a>
+                        </p>
+                    </div>
+                </section>
+
+                <section class="glass-card rounded-3xl p-8 shadow-xl">
+                    <h2 class="text-xl font-display font-bold text-nagruen-accent mb-6 uppercase tracking-wider">
+                        Allgemeine Hinweise</h2>
+                    <p class="text-nagruen-accent/80 font-light leading-relaxed">
+                        Wir nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen
+                        Daten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften sowie dieser
+                        Datenschutzerklärung. Die Nutzung unserer Website ist in der Regel ohne Angabe personenbezogener
+                        Daten möglich.
+                    </p>
+                </section>
+
+                <section class="glass-card rounded-3xl p-8 shadow-xl">
+                    <h2 class="text-xl font-display font-bold text-nagruen-accent mb-6 uppercase tracking-wider">
+                        Datenerfassung auf unserer Website</h2>
+                    <div class="space-y-6 text-nagruen-accent/80 font-light leading-relaxed">
+                        <div>
+                            <h3 class="text-nagruen-accent font-medium mb-2">Server-Log-Files</h3>
+                            <p>
+                                Der Provider der Seiten erhebt und speichert automatisch Informationen in sogenannten
+                                Server-Log-Files, die Ihr Browser automatisch an uns übermittelt. Dies sind: Browsertyp,
+                                Betriebssystem, Referrer URL, Hostname des zugreifenden Rechners, Uhrzeit der
+                                Serveranfrage und IP-Adresse. Diese Daten sind nicht bestimmten Personen zuordbar. Eine
+                                Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="text-nagruen-accent font-medium mb-2">Cookies & Tracking</h3>
+                            <p>
+                                Wir setzen auf dieser Website **keine** Analyse-Tools (wie Google Analytics),
+                                Marketing-Pixel oder sonstige Tracking-Cookies ein. Es werden lediglich technisch
+                                notwendige Daten verarbeitet, um die Website sicher und funktionsfähig bereitzustellen.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="text-nagruen-accent font-medium mb-2">SSL- bzw. TLS-Verschlüsselung</h3>
+                            <p>
+                                Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher
+                                Inhalte eine SSL-bzw. TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie
+                                daran, dass die Adresszeile des Browsers von "http://" auf "https://" wechselt.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="glass-card rounded-3xl p-8 shadow-xl">
+                    <h2 class="text-xl font-display font-bold text-nagruen-accent mb-6 uppercase tracking-wider">Ihre
+                        Rechte</h2>
+                    <p class="text-nagruen-accent/80 font-light leading-relaxed">
+                        Sie haben jederzeit das Recht auf unentgeltliche Auskunft über Ihre gespeicherten
+                        personenbezogenen Daten, deren Herkunft und Empfänger und den Zweck der Datenverarbeitung sowie
+                        ein Recht auf Berichtigung, Sperrung oder Löschung dieser Daten. Hierzu sowie zu weiteren Fragen
+                        zum Thema personenbezogene Daten können Sie sich jederzeit unter der im Impressum angegebenen
+                        Adresse an uns wenden.
+                    </p>
+                </section>
+            </div>
+
+            <footer class="mt-20 pt-8 border-t border-white/5 text-center">
+                <p class="text-xs text-nagruen-accent/30 font-light uppercase tracking-widest">
+                    © 2024 Iwane Narmania - NaGrün Unternehmen vor Gründung
+                </p>
+            </footer>
+        </div>
+    </main>
+</body>
+
+</html>

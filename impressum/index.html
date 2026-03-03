@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impressum - NaGrün</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'nagruen-primary': '#4D5A32',
+                        'nagruen-accent': '#B3C393',
+                        'nagruen-cream': '#F5F2ED',
+                        'nagruen-dark': '#3A4426',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                        'display': ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to bottom, #B3C393, #F5F2ED);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #4D5A32, #3A4426);
+            color: #B3C393;
+            min-height: 100vh;
+        }
+
+        @keyframes dropIn {
+            from {
+                transform: translate(-50%, -100px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+
+        .nav-drop-in {
+            animation: dropIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased">
+    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-2xl nav-drop-in">
+        <div class="glass-card rounded-full px-6 py-3 flex items-center justify-between shadow-2xl">
+            <a href="/" class="flex items-center gap-2 group cursor-pointer">
+                <span class="font-display font-bold text-2xl tracking-tight text-nagruen-accent">NaGrün</span>
+            </a>
+            <a href="/#footer"
+                onclick="if(document.referrer.includes(window.location.host)){history.back(); return false;}"
+                class="text-xs font-medium uppercase tracking-widest text-nagruen-accent/70 hover:text-nagruen-accent transition-colors">Zurück</a>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-20 px-6">
+        <div class="max-w-3xl mx-auto">
+            <header class="mb-16 text-center">
+                <h1 class="text-4xl md:text-6xl font-black tracking-tight font-display text-gradient mb-4">Impressum
+                </h1>
+                <p class="text-lg text-nagruen-accent/60 font-light italic">Gesetzliche Angaben gemäß ECG, UGB und
+                    MedienG</p>
+            </header>
+
+            <div class="space-y-8">
+                <section class="glass-card rounded-3xl p-8 shadow-xl">
+                    <h2 class="text-xl font-display font-bold text-nagruen-accent mb-6 uppercase tracking-wider">
+                        Unternehmensangaben</h2>
+                    <div class="space-y-4 text-nagruen-accent/80 font-light leading-relaxed">
+                        <p>
+                            <strong class="block text-nagruen-accent font-medium mb-1">Inhaber:</strong>
+                            Iwane Narmania - NaGrün Unternehmen vor Gründung
+                        </p>
+                        <p>
+                            <strong class="block text-nagruen-accent font-medium mb-1">Unternehmensgegenstand:</strong>
+                            NaGrün – Mietgärten<br>
+                            Aktivierung ungenutzter Innenhöfe und Restflächen in Wohnanlagen für innovative, rückbaubare
+                            Mietgartenanlagen.
+                        </p>
+                        <p>
+                            <strong class="block text-nagruen-accent font-medium mb-1">Sitz:</strong>
+                            Eichenstraße 17/3<br>
+                            1120 Wien, Österreich
+                        </p>
+                    </div>
+                </section>
+
+                <section class="glass-card rounded-3xl p-8 shadow-xl">
+                    <h2 class="text-xl font-display font-bold text-nagruen-accent mb-6 uppercase tracking-wider">Kontakt
+                    </h2>
+                    <div class="space-y-4 text-nagruen-accent/80 font-light leading-relaxed">
+                        <p>
+                            <strong class="block text-nagruen-accent font-medium mb-1">E-Mail:</strong>
+                            <a href="mailto:office@na-gruen.at"
+                                class="hover:text-nagruen-accent transition-colors underline decoration-nagruen-accent/30">office@na-gruen.at</a>
+                        </p>
+                        <p>
+                            <strong class="block text-nagruen-accent font-medium mb-1">Telefon:</strong>
+                            <a href="tel:+436763043815" class="hover:text-nagruen-accent transition-colors">+43 (0) 676
+                                304 38 15</a>
+                        </p>
+                    </div>
+                </section>
+
+                <section class="glass-card rounded-3xl p-8 shadow-xl">
+                    <h2 class="text-xl font-display font-bold text-nagruen-accent mb-6 uppercase tracking-wider">
+                        Aufsichtsbehörde & Recht</h2>
+                    <div class="space-y-4 text-nagruen-accent/80 font-light leading-relaxed">
+                        <p>
+                            <strong class="block text-nagruen-accent font-medium mb-1">Zuständige
+                                Aufsichtsbehörde:</strong>
+                            Magistrat der Stadt Wien
+                        </p>
+                        <p>
+                            <strong class="block text-nagruen-accent font-medium mb-1">Berufsrecht:</strong>
+                            Gewerbeordnung (www.ris.bka.gv.at)
+                        </p>
+                    </div>
+                </section>
+
+                <section class="glass-card rounded-3xl p-8 shadow-xl">
+                    <h2 class="text-xl font-display font-bold text-nagruen-accent mb-6 uppercase tracking-wider">
+                        Online-Streitbeilegung</h2>
+                    <p class="text-nagruen-accent/80 font-light leading-relaxed">
+                        Verbraucher haben die Möglichkeit, Beschwerden an die Online-Streitbeilegungsplattform der EU zu
+                        richten:
+                        <a href="http://ec.europa.eu/odr" target="_blank" rel="noopener noreferrer"
+                            class="hover:text-nagruen-accent transition-colors underline decoration-nagruen-accent/30">http://ec.europa.eu/odr</a>.
+                        Sie können allfällige Beschwerde auch an die oben angegebene E-Mail-Adresse richten.
+                    </p>
+                </section>
+            </div>
+
+            <footer class="mt-20 pt-8 border-t border-white/5 text-center">
+                <p class="text-xs text-nagruen-accent/30 font-light uppercase tracking-widest">
+                    © 2024 Iwane Narmania - NaGrün Unternehmen vor Gründung
+                </p>
+            </footer>
+        </div>
+    </main>
+</body>
+
+</html>
