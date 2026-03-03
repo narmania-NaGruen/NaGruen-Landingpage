@@ -1,8 +1,13 @@
-import { motion } from "motion/react";
-import { useEffect } from "react";
-import { Leaf, Users, Zap, CheckCircle2, ShieldCheck, TrendingUp, Sprout, Mail, Phone } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { useEffect, useState } from "react";
+import { Leaf, Users, Zap, CheckCircle2, ShieldCheck, TrendingUp, Sprout, Mail, Phone, ChevronDown } from "lucide-react";
+import React from "react";
 
-const Logo = ({ onClick }: { onClick?: () => void }) => (
+interface LogoProps {
+  onClick?: () => void;
+}
+
+const Logo: React.FC<LogoProps> = ({ onClick }) => (
   <div className="flex items-center gap-2 group cursor-pointer" onClick={onClick}>
     <img
       src="/logo.png"
@@ -17,28 +22,131 @@ const Logo = ({ onClick }: { onClick?: () => void }) => (
   </div>
 );
 
-const ProItem = ({ text }: { text: string }) => (
+interface ProItemProps {
+  text: string;
+}
+
+const ProItem: React.FC<ProItemProps> = ({ text }) => (
   <li className="flex items-start gap-4 text-nagruen-primary/80 font-light text-sm md:text-base">
     <CheckCircle2 className="w-5 h-5 text-nagruen-primary/40 shrink-0 mt-0.5" />
     <span className="flex-1 min-w-0">{text}</span>
   </li>
 );
 
+interface AccordionItemProps {
+  question: string;
+  answer: React.ReactNode;
+  isOpen: boolean;
+  onClick: () => void;
+}
+
+const AccordionItem: React.FC<AccordionItemProps> = ({ question, answer, isOpen, onClick }) => (
+  <div className="border-b border-nagruen-accent/10 last:border-0">
+    <button
+      onClick={onClick}
+      className="w-full py-6 flex items-center justify-between text-left hover:text-nagruen-accent transition-colors group"
+    >
+      <h3 className="text-lg md:text-xl font-medium tracking-tight pr-8">{question}</h3>
+      <ChevronDown className={`w-5 h-5 shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180 text-nagruen-accent' : 'text-nagruen-accent/30'}`} />
+    </button>
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: "auto", opacity: 1 }}
+          exit={{ height: 0, opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          className="overflow-hidden"
+        >
+          <div className="pb-8 text-nagruen-accent/70 font-light leading-relaxed whitespace-pre-line">
+            {answer}
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  </div>
+);
+
 export default function App() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
   useEffect(() => {
-    // If we land with #footer, scroll there after a small delay to account for hydration/animations
-    if (window.location.hash === '#footer') {
-      setTimeout(() => {
-        const footer = document.getElementById('footer');
-        if (footer) {
-          footer.scrollIntoView({ behavior: 'auto' });
-        }
-      }, 100);
+    if (window.location.pathname === '/' && !window.location.hash) {
+      window.scrollTo(0, 0);
     }
   }, []);
 
+  const faqData = [
+    {
+      category: "Bewohner:innen",
+      items: [
+        {
+          q: "Wie funktioniert „Garten mieten“ in Wien bei NaGrün?",
+          a: "Ganz einfach: Wir aktivieren ungenutzte Innenhöfe in Wiener Wohnanlagen und errichten dort modulare Gartenblocks. Bewohner:innen können eine private Parzelle (24–36 m²) mieten. NaGrün übernimmt dabei die gesamte Infrastruktur, den Aufbau und die laufende Betreuung, damit Sie sofort mit dem Urban Gardening starten können."
+        },
+        {
+          q: "Ist NaGrün wie ein Schrebergarten? Was ist der Unterschied?",
+          a: "NaGrün ist die moderne, flexible Alternative zum klassischen Kleingartenverein. Während traditionelle Schrebergärten oft weit entfernt sind, lange Wartelisten haben und strenge Anbau-Pflichten vorschreiben, bieten wir wohnungsnahe Mietgärten direkt vor der Haustür. Unsere Parzellen sind überschaubar groß (24–36 m²) – konzipiert als angenehmes Hobby zur Entspannung und nicht als zusätzliche zeitliche Belastung im hektischen Alltag."
+        },
+        {
+          q: "Wodurch validieren wir unsere Nachfrage?",
+          a: "Die Nachfrage nach privatem Grün in Wien ist enorm und bei weitem nicht gedeckt. Ein klares Beispiel sind die Gartenprojekte der Stadt Wien im 21. und 22. Bezirk, die Anfang 2025 über 10.000 Bewerber:innen für nur wenige hundert Plätze verzeichneten. NaGrün schließt diese Lücke, indem wir ungenutzte Flächen in dicht besiedelten Gebieten wie dem 1100 Favoriten oder dem Sonnwendviertel aktivieren."
+        },
+        {
+          q: "Was kostet eine Gartenparzelle bei NaGrün?",
+          a: "Wir bieten transparente All-in-Mietmodelle an, die bereits Strom, Wasser und die Grundausstattung enthalten. In der Pilotphase orientieren wir uns an attraktiven Monatspauschalen für 12-Monats-Verträge (ab ca. 100€) oder flexiblen Saisonmieten für das Sommerhalbjahr, um Natur im Alltag für jede Familie leistbar zu machen."
+        }
+      ]
+    },
+    {
+      category: "Hausverwaltung & Eigentümer",
+      items: [
+        {
+          q: "Welche Kosten entstehen für Eigentümer (CAPEX)?",
+          a: "Für Eigentümer und Hausverwaltungen gilt: 0 € CAPEX. NaGrün finanziert, plant, baut und betreibt die gesamte Anlage. Wir verwandeln brachliegende Restflächen ohne finanzielle Investition Ihrerseits in hochwertige Gemeinschaftsflächen."
+        },
+        {
+          q: "Wie steht es um Haftung, Versicherung und Rückbau?",
+          a: "NaGrün übernimmt die vollständige Risikoübernahme. Das umfasst die Auslastung, den laufenden Betrieb, die Instandhaltung sowie die Versicherung der Anlage. Unser System ist als modulares Plug-and-Play-Prinzip konzipiert und somit jederzeit vollständig und spurlos rückbaubar."
+        },
+        {
+          q: "Wie passt NaGrün zu ESG-Reporting und Nachhaltigkeitszielen?",
+          a: "Durch die Aktivierung von Innenhöfen leisten wir einen messbaren Beitrag zum ESG-Impact. Wir fördern die Biodiversität im urbanen Raum, reduzieren Hitzeinseln durch aktive Begrünung (Mikroklima-Regulierung) und steigern die soziale Mieterzufriedenheit sowie die langfristige Bindung an den Standort."
+        }
+      ]
+    },
+    {
+      category: "Wirkung & Technik",
+      items: [
+        {
+          q: "Was ist ein modularer „Gartenblock“ konkret?",
+          a: "Ein standardisierter NaGrün Gartenblock besteht typischerweise aus 12 Einzelparzellen auf einer Fläche von ca. 416 m². Jede Einheit verfügt über 2-3 Pflanzbeete, einen abschließbaren Stauraum für Werkzeug und einen eigenen Zugang. Die gesamte Anlage ist durch ein Haupttor gesichert."
+        },
+        {
+          q: "Wie verbessert NaGrün das Mikroklima in Wien?",
+          a: "Unsere Anlagen wirken aktiv gegen urbane Hitzeinseln. Durch Entsiegelung (wo möglich) und intensive Begrünung verdunstet Wasser, was die Umgebungstemperatur im Innenhof spürbar senkt. Dies ist eine effektive Maßnahme zur Klimawandelanpassung für Bestandsobjekte und Neubauten."
+        }
+      ]
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-nagruen-primary via-nagruen-primary to-nagruen-dark selection:bg-nagruen-accent selection:text-nagruen-primary">
+      {/* JSON-LD for SEO */}
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": faqData.flatMap(cat => cat.items.map(item => ({
+            "@type": "Question",
+            "name": item.q,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": item.a
+            }
+          })))
+        })}
+      </script>
       {/* Navigation Slider */}
       <nav className="fixed top-6 md:top-10 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-[90%] max-w-2xl">
         <motion.div
@@ -50,10 +158,11 @@ export default function App() {
           <div className="flex items-center gap-2 md:gap-4 shrink-0">
             <Logo onClick={() => document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth' })} />
           </div>
-          <div className="flex items-center gap-3 md:gap-10">
+          <div className="flex items-center gap-4 md:gap-10">
             {[
               { name: "Vision", id: "vision" },
               { name: "Lösung", id: "solution" },
+              { name: "Q&A", id: "knowledge" },
               { name: "Kontakt", id: "contact" }
             ].map((item) => (
               <button
@@ -87,7 +196,7 @@ export default function App() {
                 transition={{ delay: 0.5, duration: 1 }}
                 className="text-xl md:text-3xl text-nagruen-accent/80 max-w-4xl mx-auto font-light leading-snug px-4 md:px-0 mb-12"
               >
-                Wir aktivieren ungenutzte Innenhöfe und Restflächen in Wiener Wohnanlagen und machen daraus Inovative, rückbaubare Mietgartenanlagen.
+                Wir aktivieren ungenutzte Innenhöfe und Restflächen in Wiener Wohnanlagen und machen daraus Innovative, rückbaubare Mietgartenanlagen.
               </motion.p>
 
               <motion.div
@@ -98,7 +207,7 @@ export default function App() {
               >
                 <img
                   src="/hero visu.png"
-                  alt="NaGrün Visualisierung"
+                  alt="NaGrün Visualisierung – Innovative Mietgärten in einem Wiener Innenhof für Urban Gardening und Biodiversität"
                   className="w-full h-auto object-cover"
                   referrerPolicy="no-referrer"
                 />
@@ -164,6 +273,7 @@ export default function App() {
 
         {/* Benefits Section */}
         <section id="solution" className="py-20 md:py-32 px-4 md:px-12 bg-nagruen-cream text-nagruen-primary relative overflow-hidden">
+          {/* ... existing benefits content ... */}
           <div className="max-w-7xl mx-auto relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -171,7 +281,7 @@ export default function App() {
               viewport={{ once: true }}
               className="text-center mb-12 md:mb-20"
             >
-              <h2 className="text-3xl md:text-6xl font-black tracking-tight mb-4">Die Lösung für alle.</h2>
+              <h2 className="text-3xl md:text-6xl font-black tracking-tight mb-4 text-nagruen-primary">Die Lösung für alle.</h2>
               <p className="text-lg md:text-xl text-nagruen-primary/60 font-light">Vorteile, die über den Gartenzaun hinausgehen.</p>
             </motion.div>
 
@@ -180,7 +290,7 @@ export default function App() {
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(0,0,0,0.05)" }}
+                whileHover={{ y: -5 }}
                 viewport={{ once: true }}
                 className="p-8 md:p-12 bg-white/90 backdrop-blur-sm rounded-[2.5rem] border border-nagruen-primary/10 transition-all duration-500 shadow-xl"
               >
@@ -203,7 +313,7 @@ export default function App() {
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(0,0,0,0.05)" }}
+                whileHover={{ y: -5 }}
                 viewport={{ once: true }}
                 className="p-8 md:p-12 bg-white/90 backdrop-blur-sm rounded-[2.5rem] border border-nagruen-primary/10 transition-all duration-500 shadow-xl"
               >
@@ -223,9 +333,183 @@ export default function App() {
               </motion.div>
             </div>
           </div>
-
-          {/* Decoration */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-nagruen-accent/10 blur-[120px] rounded-full pointer-events-none" />
+        </section>
+
+        {/* SEO FAQ Section */}
+        <section id="knowledge" className="py-20 md:py-32 px-4 md:px-12 relative overflow-hidden bg-nagruen-primary/5">
+          <div className="max-w-4xl mx-auto relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mb-16 text-center"
+            >
+              <h2 className="text-3xl md:text-6xl font-black font-display tracking-tight text-gradient mb-6 leading-tight">Häufige Fragen</h2>
+              <p className="text-lg text-nagruen-accent/60 font-light leading-relaxed">
+                Alles Wissenswerte über das Pilotprojekt NaGrün, <strong>Urban Gardening</strong> in Wiener Wohnhausanlagen und wie wir den Wunsch nach einem eigenen <strong>Garten in Wien</strong> erfüllen.
+              </p>
+            </motion.div>
+
+            <div className="space-y-12">
+              {[
+                {
+                  category: "Bewohner:innen",
+                  items: [
+                    {
+                      q: "Wie funktioniert die Gartenmiete bei NaGrün?",
+                      a: "NaGrün bringt innovative Mietgärten direkt in Wiener Wohnanlagen: Wir aktivieren ungenutzte Innenhöfe und bauen dort standardisierte Gartenblocks mit 12 privaten Parzellen. Du mietest eine 24–36 m² Gartenparzelle und kannst sofort loslegen – mit fertig vorbereiteten, humusbefüllten Beeten, abschließbarem Schrank sowie zentral geteilter Wasser- und Strom-Infrastruktur. Betrieb, Organisation und Regeln sind so aufgesetzt, dass es für alle im Haus unkompliziert bleibt."
+                    },
+                    {
+                      q: "Was unterscheidet ein NaGrün Garten von einem Schrebergarten?",
+                      a: "NaGrün ist eine innovative wohnungsnahe Alternative zur klassischen Schrebergartenanlage oder zum Kleingartenverein: Statt einer weit entfernten Anlage mit Vereinslogik bekommst du bei NaGrün eine überschaubare, private Gartenparzelle (24–36 m²) direkt im Innenhof deiner Wohnanlage. Gleichzeitig gibt es eine klare Hausordnung (Ruhe, Sauberkeit, Nutzung), damit das Miteinander im Wohnhaus entspannt bleibt – ohne Stress, ohne Konflikte. Im Gegensatz zum klassischen Kleingarten mit meistens 100–200 m² ist NaGrün bewusst kleiner, näher und alltagstauglich."
+                    },
+                    {
+                      q: "Was kostet eine Gartenparzelle bei NaGrün?",
+                      a: (
+                        <div className="space-y-6">
+                          <p>Bei NaGrün mietest du zum Fixpreis pro Monat (Flatrate) – unkompliziert und transparent:</p>
+                          <ul className="space-y-4">
+                            <li className="flex items-start gap-3">
+                              <CheckCircle2 className="w-5 h-5 text-nagruen-accent/40 shrink-0 mt-0.5" />
+                              <div className="flex-1">
+                                <strong>24 m² Parzelle</strong>: 109 € / Monat
+                                <p className="text-sm opacity-60">inkl. 2 humusbefüllte Beete + abschließbarer Schrank</p>
+                              </div>
+                            </li>
+                            <li className="flex items-start gap-3">
+                              <CheckCircle2 className="w-5 h-5 text-nagruen-accent/40 shrink-0 mt-0.5" />
+                              <div className="flex-1">
+                                <strong>36 m² Parzelle</strong>: 149 € / Monat
+                                <p className="text-sm opacity-60">inkl. 3 humusbefüllte Beete + abschließbarer Schrank</p>
+                              </div>
+                            </li>
+                          </ul>
+                          <div className="space-y-3 pt-2">
+                            <p className="text-sm font-medium text-nagruen-accent/80">Wasser und Strom sind über eine zentral geteilte Infrastruktur organisiert:</p>
+                            <ul className="space-y-3">
+                              <li className="flex items-start gap-3">
+                                <CheckCircle2 className="w-5 h-5 text-nagruen-accent/40 shrink-0 mt-0.5" />
+                                <span>Wasser über eine zentral geteilte Wasserstelle</span>
+                              </li>
+                              <li className="flex items-start gap-3">
+                                <CheckCircle2 className="w-5 h-5 text-nagruen-accent/40 shrink-0 mt-0.5" />
+                                <span>Strom über zentral geteilte Elektro-Verteilerstellen (für alle Gärtner:innen gut zugänglich)</span>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      )
+                    },
+                    {
+                      q: "Was bekomme ich konkret bei den jeweiligen Gärten?",
+                      a: (
+                        <div className="space-y-6">
+                          <p>Du bekommst eine abgegrenzte, private Gartenfläche in einer geordneten Anlage:</p>
+                          <ul className="space-y-3">
+                            <li className="flex items-start gap-3">
+                              <CheckCircle2 className="w-5 h-5 text-nagruen-accent/40 shrink-0 mt-0.5" />
+                              <span><strong>24 m²</strong>: 2 mit Humuserde befüllte Beete</span>
+                            </li>
+                            <li className="flex items-start gap-3">
+                              <CheckCircle2 className="w-5 h-5 text-nagruen-accent/40 shrink-0 mt-0.5" />
+                              <span><strong>36 m²</strong>: 3 mit Humuserde befüllte Beete</span>
+                            </li>
+                            <li className="flex items-start gap-3">
+                              <CheckCircle2 className="w-5 h-5 text-nagruen-accent/40 shrink-0 mt-0.5" />
+                              <span><strong>Abschließbarer Schrank</strong> für Werkzeug & Gießkanne</span>
+                            </li>
+                            <li className="flex items-start gap-3">
+                              <CheckCircle2 className="w-5 h-5 text-nagruen-accent/40 shrink-0 mt-0.5" />
+                              <span><strong>Zentrale Wasserstelle</strong> und <strong>Stromzugang</strong></span>
+                            </li>
+                          </ul>
+                        </div>
+                      )
+                    }
+                  ]
+                },
+                {
+                  category: "Hausverwaltung & Eigentümer",
+                  items: [
+                    {
+                      q: "Welche Kosten entstehen für Eigentümer?",
+                      a: "Für Eigentümer und Hausverwaltungen gilt: 0 € CAPEX. NaGrün finanziert, plant, baut und betreibt die gesamte Anlage. Wir verwandeln brachliegende Restflächen ohne finanzielle Investition Ihrerseits in hochwertige Gemeinschaftsflächen."
+                    },
+                    {
+                      q: "Wie steht es um Haftung, Versicherung und Rückbau?",
+                      a: "NaGrün übernimmt die vollständige Risikoübernahme. Das umfasst die Auslastung, den laufenden Betrieb, die Instandhaltung sowie die Versicherung der Anlage. Unser System ist als modulares Plug-and-Play-Prinzip konzipiert und somit jederzeit vollständig und spurlos rückbaubar."
+                    },
+                    {
+                      q: "Wie passt NaGrün zu ESG-Reporting und Nachhaltigkeitszielen?",
+                      a: "Durch die Aktivierung von Innenhöfen leisten wir einen messbaren Beitrag zum ESG-Impact. Wir fördern die Biodiversität im urbanen Raum, reduzieren Hitzeinseln durch aktive Begrünung (Mikroklima-Regulierung) und steigern die soziale Mieterzufriedenheit sowie die langfristige Bindung an den Standort."
+                    }
+                  ]
+                },
+                {
+                  category: "Hintergrund & Wirkung",
+                  items: [
+                    {
+                      q: "Wodurch validieren wir unsere Nachfrage?",
+                      a: "Die Nachfrage nach privatem Grün in Wien ist enorm und bei weitem nicht gedeckt. Ein klares Beispiel sind die Gartenprojekte der Stadt Wien im 21. und 22. Bezirk, die Anfang 2025 über 10.000 Bewerber:innen für nur wenige hundert Plätze verzeichneten. NaGrün schließt diese Lücke, indem wir ungenutzte Flächen in dicht besiedelten Gebieten wie dem 1100 Favoriten oder dem Sonnwendviertel aktivieren."
+                    },
+                    {
+                      q: "Was ist ein modularer Gartenblock konkret?",
+                      a: (
+                        <div className="space-y-6">
+                          <p>Ein standardisierter NaGrün Gartenblock ist ein modulares System:</p>
+                          <ul className="space-y-3">
+                            <li className="flex items-start gap-3">
+                              <CheckCircle2 className="w-5 h-5 text-nagruen-accent/40 shrink-0 mt-0.5" />
+                              <span><strong>Fläche</strong>: 13x32m (ca. 416 m² Gesamtfläche)</span>
+                            </li>
+                            <li className="flex items-start gap-3">
+                              <CheckCircle2 className="w-5 h-5 text-nagruen-accent/40 shrink-0 mt-0.5" />
+                              <span><strong>Kapazität</strong>: Typischerweise 12 Einzelparzellen</span>
+                            </li>
+                            <li className="flex items-start gap-3">
+                              <CheckCircle2 className="w-5 h-5 text-nagruen-accent/40 shrink-0 mt-0.5" />
+                              <span><strong>Ausstattung</strong>: 2-3 Pflanzbeete & Schrank pro Einheit</span>
+                            </li>
+                            <li className="flex items-start gap-3">
+                              <CheckCircle2 className="w-5 h-5 text-nagruen-accent/40 shrink-0 mt-0.5" />
+                              <span><strong>Sicherheit</strong>: Gesichert durch ein Haupttor</span>
+                            </li>
+                          </ul>
+                        </div>
+                      )
+                    },
+                    {
+                      q: "Wie verbessert NaGrün das Mikroklima in Wien?",
+                      a: "Unsere Anlagen wirken aktiv gegen urbane Hitzeinseln. Durch Entsiegelung (wo möglich) und intensive Begrünung verdunstet Wasser, was die Umgebungstemperatur im Innenhof spürbar senkt. Dies ist eine effektive Maßnahme zur Klimawandelanpassung für Bestandsobjekte und Neubauten."
+                    }
+                  ]
+                }
+              ].map((category, catIndex) => (
+                <div key={category.category} className="glass-card p-6 md:p-10 rounded-[3rem] border-white/5">
+                  <h3 className="text-nagruen-accent font-bold mb-6 uppercase tracking-widest text-xs flex items-center gap-3">
+                    <div className="w-1 h-4 bg-nagruen-accent rounded-full" />
+                    {category.category}
+                  </h3>
+                  <div className="divide-y divide-nagruen-accent/10">
+                    {category.items.map((item, itemIndex) => {
+                      const globalIndex = catIndex * 10 + itemIndex;
+                      return (
+                        <AccordionItem
+                          key={item.q}
+                          question={item.q}
+                          answer={item.a}
+                          isOpen={openIndex === globalIndex}
+                          onClick={() => setOpenIndex(openIndex === globalIndex ? null : globalIndex)}
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="absolute top-1/2 left-0 w-64 h-64 bg-nagruen-accent/5 blur-[100px] rounded-full -translate-y-1/2" />
         </section>
 
         {/* Contact Section */}
@@ -237,7 +521,7 @@ export default function App() {
               viewport={{ once: true }}
               className="glass-card rounded-[3rem] p-12 md:p-20 shadow-2xl border-white/10"
             >
-              <h2 className="text-3xl md:text-5xl font-black tracking-tight font-display text-gradient mb-8 pb-1 leading-tight">
+              <h2 className="text-3xl md:text-6xl font-black font-display tracking-tight text-gradient mb-8 pb-1 leading-tight">
                 Noch Fragen?
               </h2>
               <p className="text-lg md:text-xl text-nagruen-accent/70 font-light mb-12">
